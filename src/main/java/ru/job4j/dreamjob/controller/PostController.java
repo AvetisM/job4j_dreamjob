@@ -14,7 +14,7 @@ public class PostController {
 
     private final PostService postService;
 
-    public PostController(PostService postService) {
+    private PostController(PostService postService) {
         this.postService = postService;
     }
 

@@ -8,13 +8,13 @@ import java.util.Collection;
 
 @Service
 public class PostService {
-    public final PostStore postStore;
+    private final PostStore postStore;
 
-    public PostService(PostStore postStore) {
+    private PostService(PostStore postStore) {
         this.postStore = postStore;
     }
 
-    public  Collection<Post> findAll() {
+    public Collection<Post> findAll() {
         return postStore.findAll();
     }
 

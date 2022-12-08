@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class CandidateController {
     private final CandidateStore candidateStore;
 
-    public CandidateController(CandidateStore candidateStore) {
+    private CandidateController(CandidateStore candidateStore) {
         this.candidateStore = candidateStore;
     }
 

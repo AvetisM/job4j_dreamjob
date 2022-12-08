@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Repository
 public class CandidateStore {
 
-    private  final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
+    private final Map<Integer, Candidate> candidates = new ConcurrentHashMap<>();
     private final AtomicInteger currentId = new AtomicInteger(0);
 
     private CandidateStore() {

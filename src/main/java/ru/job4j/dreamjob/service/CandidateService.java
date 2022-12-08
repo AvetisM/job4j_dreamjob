@@ -8,9 +8,9 @@ import java.util.Collection;
 
 @Service
 public class CandidateService {
-    public final CandidateStore candidateStore;
+    private final CandidateStore candidateStore;
 
-    public  CandidateService(CandidateStore candidateStore) {
+    private CandidateService(CandidateStore candidateStore) {
         this.candidateStore = candidateStore;
     }
 
