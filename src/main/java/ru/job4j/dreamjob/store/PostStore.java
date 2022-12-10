@@ -1,7 +1,9 @@
 package ru.job4j.dreamjob.store;
 
 import org.springframework.stereotype.Repository;
+import ru.job4j.dreamjob.model.City;
 import ru.job4j.dreamjob.model.Post;
+import ru.job4j.dreamjob.service.CityService;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -16,11 +18,13 @@ public class PostStore {
     private final AtomicInteger currentId = new AtomicInteger(0);
 
     private PostStore() {
-        Post post1 = new Post(currentId.incrementAndGet(), "Junior Java Job", "Требуемый опыт - не требуется", LocalDateTime.now());
+        CityService cityService = new CityService();
+        City city = cityService.getAllCities().get(0);
+        Post post1 = new Post(currentId.incrementAndGet(), "Junior Java Job", "Требуемый опыт - не требуется", LocalDateTime.now(), city);
         posts.put(post1.getId(), post1);
-        Post post2 = new Post(currentId.incrementAndGet(), "Middle Java Job", "Требуемый опыт - меньше года", LocalDateTime.now());
+        Post post2 = new Post(currentId.incrementAndGet(), "Middle Java Job", "Требуемый опыт - меньше года", LocalDateTime.now(), city);
         posts.put(post2.getId(), post2);
-        Post post3 = new Post(currentId.incrementAndGet(), "Senior Java Job", "Требуемый опыт - год и более", LocalDateTime.now());
+        Post post3 = new Post(currentId.incrementAndGet(), "Senior Java Job", "Требуемый опыт - год и более", LocalDateTime.now(), city);
         posts.put(post3.getId(), post3);
     }
 

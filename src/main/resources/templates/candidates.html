@@ -41,6 +41,7 @@
         <th scope="col">#</th>
         <th scope="col">Имя</th>
         <th scope="col">Описание</th>
+        <th scope="col">Город</th>
         <th scope="col">Дата публикации</th>
       </tr>
       </thead>
@@ -54,6 +55,7 @@
           <span th:text="${candidate.name}"></span>
         </td>
         <td th:text="${candidate.description}"></td>
+        <td th:text="${candidate.city.name}"></td>
         <td th:text="${candidate.created}"></td>
       </tr>
       </tbody>

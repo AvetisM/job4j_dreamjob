@@ -2,6 +2,9 @@ package ru.job4j.dreamjob.store;
 
 import org.springframework.stereotype.Repository;
 import ru.job4j.dreamjob.model.Candidate;
+import ru.job4j.dreamjob.model.City;
+import ru.job4j.dreamjob.service.CityService;
+
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Map;
@@ -15,11 +18,13 @@ public class CandidateStore {
     private final AtomicInteger currentId = new AtomicInteger(0);
 
     private CandidateStore() {
-        Candidate candidate1 = new Candidate(currentId.incrementAndGet(), "Мхитарянц Аветис", "Опыт работы 1 год", LocalDateTime.now());
+        CityService cityService = new CityService();
+        City city = cityService.getAllCities().get(0);
+        Candidate candidate1 = new Candidate(currentId.incrementAndGet(), "Мхитарянц Аветис", "Опыт работы 1 год", LocalDateTime.now(), city);
         candidates.put(candidate1.getId(), candidate1);
-        Candidate candidate2 = new Candidate(currentId.incrementAndGet(), "Ким Роман", "Опыт работы до 3-х лет", LocalDateTime.now());
+        Candidate candidate2 = new Candidate(currentId.incrementAndGet(), "Ким Роман", "Опыт работы до 3-х лет", LocalDateTime.now(), city);
         candidates.put(candidate2.getId(), candidate2);
-        Candidate candidate3 = new Candidate(currentId.incrementAndGet(), "Катранов Вадим", "Опыт работы более 3-х лет", LocalDateTime.now());
+        Candidate candidate3 = new Candidate(currentId.incrementAndGet(), "Катранов Вадим", "Опыт работы более 3-х лет", LocalDateTime.now(), city);
         candidates.put(candidate3.getId(), candidate3);
     }
 
