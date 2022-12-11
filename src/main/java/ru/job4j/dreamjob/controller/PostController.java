@@ -2,10 +2,7 @@ package ru.job4j.dreamjob.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import ru.job4j.dreamjob.model.Post;
 import ru.job4j.dreamjob.service.CityService;
 import ru.job4j.dreamjob.service.PostService;
@@ -34,7 +31,9 @@ public class PostController {
     }
 
     @PostMapping("/createPost")
-    public String createPost(@ModelAttribute Post post) {
+    public String createPost(@ModelAttribute Post post,
+                             @RequestParam("city.id") int cityId) {
+        post.setCity(cityService.findById(cityId));
         postService.add(post);
         return "redirect:/posts";
     }
@@ -47,7 +46,9 @@ public class PostController {
     }
 
     @PostMapping("/updatePost")
-    public String updatePost(@ModelAttribute Post post) {
+    public String updatePost(@ModelAttribute Post post,
+                             @RequestParam("city.id") int cityId) {
+        post.setCity(cityService.findById(cityId));
         postService.update(post);
         return "redirect:/posts";
     }
