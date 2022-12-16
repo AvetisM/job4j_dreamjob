@@ -1,2 +1,0 @@
-ALTER TABLE post ADD COLUMN description TEXT;
-ALTER TABLE post ADD COLUMN created TIMESTAMP;
