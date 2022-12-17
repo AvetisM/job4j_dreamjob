@@ -83,7 +83,7 @@ public class PostDBStore {
             ps.setInt(1, id);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
-                    getNewPost(it);
+                   return getNewPost(it);
                 }
             }
         } catch (Exception e) {
