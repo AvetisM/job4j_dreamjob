@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
   <!-- Required meta tags -->
@@ -14,59 +14,45 @@
           integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
           integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <title>Вакансии</title>
+
+  <title>Работа мечты</title>
 </head>
 <body>
 <div class="container">
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">Работа мечты</a>
+    <a class="navbar-brand" href="#">Dream Job<small th:text="${user}"></small></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-item nav-link active" href="#">Главная <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" href="#">Главная</a>
         <a class="nav-item nav-link" th:href="@{/posts}">Вакансии</a>
-        <a class="nav-item nav-link" th:href="@{/formAddPost}">Добавить вакансию</a>
         <a class="nav-item nav-link" th:href="@{/candidates}">Кандидаты</a>
-        <a class="nav-item nav-link" th:href="@{/formAddCandidate}">Добавить кандидата</a>
         <a class="nav-item nav-link" th:href="@{/formAddUser}">Добавить пользователя</a>
       </div>
     </div>
   </nav>
-  <div class="row">
-    <table class="table">
-      <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Имя</th>
-        <th scope="col">Описание</th>
-        <th scope="col">Город</th>
-        <th scope="col">Дата публикации</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="post: ${posts}">
-        <td th:text="${post.id}"></td>
-        <td>
-          <a th:href="@{|/formUpdatePost/${post.id}|}">
-            <i class="fa fa-edit"></i>
-          </a>
-          <span th:text="${post.name}"></span>
-          <span th:if="${post.visible}">
-            <i class="fa fa-check-square-o"></i>
-          </span>
-          <span th:if="${!post.visible}">
-            <i class="fa fa-square-o"></i>
-          </span>
-        </td>
-        <td th:text="${post.description}"></td>
-        <td th:text="${post.city.name}"></td>
-        <td th:text="${post.created}"></td>
-      </tr>
-      </tbody>
-    </table>
+  <div class="row pt-3">
+    <div class="card" style="width: 100%">
+      <div class="card-header">
+        Новая пользователь.
+      </div>
+      <div class="card-body">
+        <form th:action="@{/createUser}" method="POST">
+          <div class="form-group">
+            <label for="name">Имя</label>
+            <input type="text" class="form-control" name="name" id="name">
+            <label for="name">email</label>
+            <input type="text" class="form-control" name="email" id="email">
+            <label for="name">пароль</label>
+            <input type="text" class="form-control" name="password" id="password">
+            <input type="hidden" name="id" value="0"/>
+          </div>
+          <button type="submit" class="btn btn-primary">Сохранить</button>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
 </body>
