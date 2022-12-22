@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.job4j.dreamjob.model.User;
 import ru.job4j.dreamjob.service.UserService;
 
+import java.util.Optional;
+
 @Controller
 public class UserController {
 
@@ -20,10 +22,13 @@ public class UserController {
         return "addUser";
     }
 
-    @PostMapping("/createUser")
-    public String createUser(@ModelAttribute User user) {
-        userService.add(user);
-        //return "redirect:/users";
-        return "redirect:/posts";
+    @PostMapping("/registration")
+    public String registration(Model model, @ModelAttribute User user) {
+        Optional<User> regUser = userService.add(user);
+        if (regUser.isEmpty()) {
+            model.addAttribute("message", "Пользователь с такой почтой уже существует");
+            return "fail";
+        }
+        return "success";
     }
 }

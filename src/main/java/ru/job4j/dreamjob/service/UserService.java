@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import ru.job4j.dreamjob.model.User;
 import ru.job4j.dreamjob.store.UserDBStore;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
 
@@ -13,11 +15,11 @@ public class UserService {
         this.userDBStore = userDBStore;
     }
 
-    public void add(User user) {
-        userDBStore.add(user);
+    public Optional<User> add(User user) {
+        return userDBStore.add(user);
     }
 
-    public User findById(int id) {
+    public Optional<User> findById(int id) {
         return userDBStore.findById(id);
     }
 

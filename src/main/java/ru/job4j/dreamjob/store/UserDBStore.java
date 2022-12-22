@@ -7,6 +7,8 @@ import org.springframework.stereotype.Repository;
 import ru.job4j.dreamjob.model.User;
 
 import java.sql.*;
+import java.util.Optional;
+
 @Repository
 public class UserDBStore {
 
@@ -19,7 +21,7 @@ public class UserDBStore {
         this.pool = pool;
     }
 
-    public User add(User user) {
+    public Optional<User> add(User user) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =
                      cn.prepareStatement(INSERT_USER,
@@ -36,23 +38,23 @@ public class UserDBStore {
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }
-        return user;
+        return Optional.of(user);
     }
 
-    public User findById(int id) {
+    public Optional<User> findById(int id) {
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =  cn.prepareStatement(SELECT_USER_BY_ID)
         ) {
             ps.setInt(1, id);
             try (ResultSet it = ps.executeQuery()) {
                 if (it.next()) {
-                    return getNewUser(it);
+                    return Optional.of(getNewUser(it));
                 }
             }
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }
-        return null;
+        return Optional.empty();
     }
 
     private User getNewUser(ResultSet it) throws SQLException {
