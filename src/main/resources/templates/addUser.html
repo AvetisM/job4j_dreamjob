@@ -29,6 +29,7 @@
         <a class="nav-item nav-link" href="#">Главная</a>
         <a class="nav-item nav-link" th:href="@{/posts}">Вакансии</a>
         <a class="nav-item nav-link" th:href="@{/candidates}">Кандидаты</a>
+        <a class="nav-item nav-link" th:href="@{/users}">Пользователи</a>
         <a class="nav-item nav-link" th:href="@{/formAddUser}">Добавить пользователя</a>
       </div>
     </div>
@@ -36,9 +37,12 @@
   <div class="row pt-3">
     <div class="card" style="width: 100%">
       <div class="card-header">
-        Новая пользователь.
+        Новый пользователь.
       </div>
       <div class="card-body">
+        <div th:if="${fail}" class="alert alert-danger" role="alert">
+          <td th:text="${message}"></td>
+        </div>
         <form th:action="@{/registration}" method="POST">
           <div class="form-group">
             <label for="name">Имя</label>
