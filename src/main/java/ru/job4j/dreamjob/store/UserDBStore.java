@@ -4,7 +4,6 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import ru.job4j.dreamjob.model.Post;
 import ru.job4j.dreamjob.model.User;
 
 import java.sql.*;
@@ -43,7 +42,6 @@ public class UserDBStore {
     }
 
     public Optional<User> add(User user) {
-        Optional<User> rls = Optional.empty();
         try (Connection cn = pool.getConnection();
              PreparedStatement ps =
                      cn.prepareStatement(INSERT_USER,
@@ -55,13 +53,13 @@ public class UserDBStore {
             try (ResultSet id = ps.getGeneratedKeys()) {
                 if (id.next()) {
                     user.setId(id.getInt(1));
-                    rls = Optional.of(user);
+                    return Optional.of(user);
                 }
             }
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
         }
-        return rls;
+        return Optional.empty();
     }
 
     public Optional<User> findById(int id) {
