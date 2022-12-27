@@ -19,7 +19,7 @@ public class UserDBStore {
     public static final String INSERT_USER = "INSERT INTO users(name, email, password) VALUES (?, ?, ?)";
     public static final String SELECT_ALL_USERS = "SELECT * FROM users";
     public static final String SELECT_USER_BY_ID = "SELECT * FROM users WHERE id = ?";
-    public static final String SELECT_USER_BY_EMAIL_PASSWORD = "SELECT * FROM users WHERE email = ?, password = ?";
+    public static final String SELECT_USER_BY_EMAIL_PASSWORD = "SELECT * FROM users WHERE email = ? and password = ?";
 
     public UserDBStore(BasicDataSource pool) {
         this.pool = pool;
