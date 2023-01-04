@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 
 @RestController
 public class IndexController {
-    @GetMapping("/index")
+    @GetMapping(value = {"/", "/index"})
     public String index(Model model, HttpSession session) {
         User user = (User) session.getAttribute("user");
         if (user == null) {
