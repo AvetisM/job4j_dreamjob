@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import ru.job4j.dreamjob.model.User;
+import ru.job4j.dreamjob.service.SessionService;
 import ru.job4j.dreamjob.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,8 +21,9 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public String posts(Model model) {
+    public String posts(Model model, HttpSession session) {
         model.addAttribute("users", userService.findAll());
+        SessionService.modelAddUser(model, session);
         return "users";
     }
 

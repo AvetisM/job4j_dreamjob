@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.*;
 import ru.job4j.dreamjob.model.Post;
 import ru.job4j.dreamjob.service.CityService;
 import ru.job4j.dreamjob.service.PostService;
+import ru.job4j.dreamjob.service.SessionService;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class PostController {
@@ -19,14 +22,16 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public String posts(Model model) {
+    public String posts(Model model, HttpSession session) {
         model.addAttribute("posts", postService.findAll());
+        SessionService.modelAddUser(model, session);
         return "posts";
     }
 
     @GetMapping("/formAddPost")
-    public String formAddPost(Model model) {
+    public String formAddPost(Model model, HttpSession session) {
         model.addAttribute("cities", cityService.getAllCities());
+        SessionService.modelAddUser(model, session);
         return "addPost";
     }
 

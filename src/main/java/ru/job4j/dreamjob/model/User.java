@@ -68,4 +68,8 @@ public class User implements Serializable {
         return Objects.hash(email);
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
 }
