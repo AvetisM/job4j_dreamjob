@@ -5,9 +5,21 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Component
 public class AuthFilter implements Filter {
+
+    private static final Set<String> SET_OF_URI = new HashSet();
+
+    public AuthFilter() {
+        SET_OF_URI.add("loginPage");
+        SET_OF_URI.add("login");
+        SET_OF_URI.add("formAddUser");
+        SET_OF_URI.add("registration");
+    }
 
     @Override
     public void doFilter(
@@ -17,7 +29,8 @@ public class AuthFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         String uri = req.getRequestURI();
-        if (uri.endsWith("loginPage") || uri.endsWith("login") || uri.endsWith("formAddUser")) {
+        boolean match = SET_OF_URI.stream().anyMatch(currentUri -> uri.endsWith(currentUri));
+        if (match) {
             chain.doFilter(req, res);
             return;
         }
