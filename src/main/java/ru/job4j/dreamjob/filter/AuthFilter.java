@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 @Component
 public class AuthFilter implements Filter {
@@ -28,9 +27,7 @@ public class AuthFilter implements Filter {
             FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
-        String uri = req.getRequestURI();
-        boolean match = SET_OF_URI.stream().anyMatch(currentUri -> uri.endsWith(currentUri));
-        if (match) {
+        if (setContainsUri(req.getRequestURI())) {
             chain.doFilter(req, res);
             return;
         }
@@ -39,5 +36,9 @@ public class AuthFilter implements Filter {
             return;
         }
         chain.doFilter(req, res);
+    }
+
+    private boolean setContainsUri(String uri) {
+        return SET_OF_URI.stream().anyMatch(currentUri -> uri.endsWith(currentUri));
     }
 }
