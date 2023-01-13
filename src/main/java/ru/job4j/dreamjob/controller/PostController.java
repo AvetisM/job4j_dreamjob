@@ -16,7 +16,7 @@ public class PostController {
     private final PostService postService;
     private final CityService cityService;
 
-    private PostController(PostService postService, CityService cityService) {
+    PostController(PostService postService, CityService cityService) {
         this.postService = postService;
         this.cityService = cityService;
     }
