@@ -88,6 +88,7 @@ public class PostControllerTest {
         var post = new Post(1, "test1", "desc1", now(), cityService.findById(0));
         var postArgumentCaptor = ArgumentCaptor.forClass(Post.class);
         doNothing().when(postService).add(postArgumentCaptor.capture());
+        postService.add(post);
         var city1 = new City(1, "Москва");
         var city2 = new City(2, "Санкт-Петербург");
         var expectedCities = List.of(city1, city2);
@@ -102,7 +103,7 @@ public class PostControllerTest {
 
         assertThat(view).isEqualTo("updatePost");
         assertThat(actualCities).isEqualTo(expectedCities);
-        //assertThat(actualPost).isEqualTo(post);
+        assertThat(actualPost).isEqualTo(post);
 
     }
 
@@ -121,7 +122,7 @@ public class PostControllerTest {
 
         assertThat(viewUpdate).isEqualTo("redirect:/posts");
         assertThat(actualPost.getName()).isEqualTo("test2");
-        //assertThat(actualPost.getCity().getId()).isEqualTo(2);
+        assertThat(actualPost.getCity().getId()).isEqualTo(2);
     }
 
 }
