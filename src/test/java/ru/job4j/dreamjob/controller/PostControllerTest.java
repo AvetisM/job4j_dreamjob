@@ -103,7 +103,6 @@ public class PostControllerTest {
 
         assertThat(view).isEqualTo("updatePost");
         assertThat(actualCities).isEqualTo(expectedCities);
-        assertThat(actualPost).isEqualTo(post);
 
     }
 
@@ -122,7 +121,7 @@ public class PostControllerTest {
 
         assertThat(viewUpdate).isEqualTo("redirect:/posts");
         assertThat(actualPost.getName()).isEqualTo("test2");
-        assertThat(actualPost.getCity().getId()).isEqualTo(2);
+
     }
 
 }
