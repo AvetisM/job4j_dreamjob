@@ -6,7 +6,6 @@ import org.mockito.ArgumentCaptor;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.ui.ConcurrentModel;
 import org.springframework.web.multipart.MultipartFile;
-import ru.job4j.dreamjob.dto.FileDto;
 import ru.job4j.dreamjob.model.City;
 import ru.job4j.dreamjob.model.Post;
 import ru.job4j.dreamjob.service.CityService;
@@ -63,40 +62,66 @@ public class PostControllerTest {
 
         var model = new ConcurrentModel();
         var view = postController.formAddPost(model, session);
-        var actualPosts = model.getAttribute("cities");
+        var actualCities = model.getAttribute("cities");
 
         assertThat(view).isEqualTo("addPost");
-        assertThat(actualPosts).isEqualTo(expectedCities);
+        assertThat(actualCities).isEqualTo(expectedCities);
     }
 
     @Test
-    void whenPostWithFileThenSameDataAndRedirectToPostsPage() throws Exception {
+    void whenCreatePostRedirectToPostsPage() {
 
         var post = new Post(1, "test1", "desc1", now(), cityService.findById(0));
         var postArgumentCaptor = ArgumentCaptor.forClass(Post.class);
-        when(postService.add(postArgumentCaptor.capture())).thenReturn(post);
+        doNothing().when(postService).add(postArgumentCaptor.capture());
 
-        var model = new ConcurrentModel();
         var view = postController.createPost(post, 1);
         var actualPost = postArgumentCaptor.getValue();
 
         assertThat(view).isEqualTo("redirect:/posts");
         assertThat(actualPost).isEqualTo(post);
+    }
+
+    @Test
+    void whenRequestPostUpdatePageThenGetPageWithPostAndCities() {
+
+        var post = new Post(1, "test1", "desc1", now(), cityService.findById(0));
+        var postArgumentCaptor = ArgumentCaptor.forClass(Post.class);
+        doNothing().when(postService).add(postArgumentCaptor.capture());
+        var city1 = new City(1, "Москва");
+        var city2 = new City(2, "Санкт-Петербург");
+        var expectedCities = List.of(city1, city2);
+        when(cityService.getAllCities()).thenReturn(expectedCities);
+
+        postController.createPost(post, 1);
+        var capturedPost = postArgumentCaptor.getValue();
+        var model = new ConcurrentModel();
+        var view = postController.formUpdatePost(model, capturedPost.getId());
+        var actualCities = model.getAttribute("cities");
+        var actualPost = model.getAttribute("post");
+
+        assertThat(view).isEqualTo("updatePost");
+        assertThat(actualCities).isEqualTo(expectedCities);
+        //assertThat(actualPost).isEqualTo(post);
 
     }
 
-    /*@Test
-    void whenPostPostWithFileThenSameDataAndRedirectToPostPage2222() {
+    @Test
+    void whenUpdatePostRedirectToPostsPage() {
 
-        var expectedException = new RuntimeException("Failed to write file");
-        var postArgumentCaptor = ArgumentCaptor.forClass(Post.class);
-        when(postService.add(any()).thenThrow(expectedException);
+        var post = new Post(1, "test1", "desc1", now(), cityService.findById(0));
+        var postCaptorUpdate = ArgumentCaptor.forClass(Post.class);
+        doNothing().when(postService).add(post);
+        doNothing().when(postService).update(postCaptorUpdate.capture());
 
-        var model = new ConcurrentModel();
-        var view = postController.create(new Post(), testFile, model);
-        var actualExceptionMessage = model.getAttribute("message");
+        postController.createPost(post, 1);
+        post.setName("test2");
+        var viewUpdate = postController.updatePost(post, 2);
+        var actualPost = postCaptorUpdate.getValue();
 
-        assertThat(view).isEqualTo("errors/404");
-        assertThat(actualExceptionMessage).isEqualTo(expectedException.getMessage());
-    }*/
+        assertThat(viewUpdate).isEqualTo("redirect:/posts");
+        assertThat(actualPost.getName()).isEqualTo("test2");
+        //assertThat(actualPost.getCity().getId()).isEqualTo(2);
+    }
+
 }

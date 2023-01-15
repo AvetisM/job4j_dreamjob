@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-public class Post implements Serializable {
+public class Post {
     private int id;
     private String name;
     private String description;
