@@ -87,11 +87,10 @@ public class PostControllerTest {
 
         var post = new Post(1, "test1", "desc1", now(), cityService.findById(0));
         var postArgumentCaptor = ArgumentCaptor.forClass(Post.class);
-        doNothing().when(postService).add(postArgumentCaptor.capture());
-        postService.add(post);
         var city1 = new City(1, "Москва");
         var city2 = new City(2, "Санкт-Петербург");
         var expectedCities = List.of(city1, city2);
+        doNothing().when(postService).add(postArgumentCaptor.capture());
         when(cityService.getAllCities()).thenReturn(expectedCities);
 
         postController.createPost(post, 1);
@@ -99,7 +98,6 @@ public class PostControllerTest {
         var model = new ConcurrentModel();
         var view = postController.formUpdatePost(model, capturedPost.getId());
         var actualCities = model.getAttribute("cities");
-        var actualPost = model.getAttribute("post");
 
         assertThat(view).isEqualTo("updatePost");
         assertThat(actualCities).isEqualTo(expectedCities);
